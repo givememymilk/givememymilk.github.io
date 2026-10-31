@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style.css">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
+<title>C-Notes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div id="Syntax"><h1 id="Syntax" class="header"><a href="#Syntax">Syntax</a></h1></div>
+
+<div id="Syntax-a) expression doesn't modify variable"><h2 id="a) expression doesn't modify variable" class="header"><a href="#Syntax-a) expression doesn't modify variable">a) expression doesn't modify variable</a></h2></div>
+
+<p>
+i.e this doesn't work properly:
+</p>
+<pre C>
+#include &lt;stdio.h&gt;
+void adv(int *p) {
+	*p + 1;
+}
+
+int main() {
+	int l[] = {1,4,9,16,25};
+	int *a = l;
+	
+	adv(a);
+	printf("%d\n", *a);
+}
+</pre>
+<p>
+will give you <code>1</code> because you only advanced <code>*p</code> by 1 in <code>adv()</code> and didn't assign that pointer to the outer function.
+</p>
+
+<p>
+The fix:
+</p>
+<pre C>
+#include &lt;stdio.h&gt;
+void adv(int *p) {
+	*p = *p + 1;
+}
+
+int main() {
+	int l[] = {1,4,9,16,25};
+	int *a = l;
+	
+	adv(a);
+	printf("%d\n", *a);
+}
+</pre>
+<p>
+because <code>*p = *p + 1</code> is assigning pointer <code>p</code> advanced by 1 to the pointer p in the outer function
+</p>
+
+</body>
+</html>
